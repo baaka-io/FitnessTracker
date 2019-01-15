@@ -4,7 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = {
     devtool: 'cheap-module-source-map',
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        historyApiFallback: true
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),

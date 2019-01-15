@@ -1,52 +1,23 @@
 import { LitElement, html } from "lit-element";
-import Firebase from "firebase";
-import config from "../config.toml"
+import Store from "./redux/store"
+import { FIREBASE_INITIALIZE } from "./redux/actions";
+import "client-link"
+import "client-route"
+import "./components/navbar/navbar"
 
 class App extends LitElement{
-    async connectedCallback(){
+    connectedCallback(){
         super.connectedCallback()
-        this.currentUser = null
-        Firebase.initializeApp(config.firebase)
-        await Firebase.auth().setPersistence(Firebase.auth.Auth.Persistence.LOCAL)
-        Firebase.auth().onAuthStateChanged(x => {
-            this.currentUser = x;
-            this.performUpdate()
-        })
-    }
-
-    login(){
-        const provider = new Firebase.auth.GoogleAuthProvider()
-        provider.addScope("https://www.googleapis.com/auth/drive")
-        provider.setCustomParameters({
-            prompt: 'select_account'
-        })
-
-        Firebase
-            .auth()
-            .signInWithRedirect(provider)
-    }
-
-    logout(){
-        Firebase
-            .auth()
-            .signOut()
-            .then(res => {
-                this.performUpdate()
-            })
+        Store.dispatch({ type: FIREBASE_INITIALIZE })
     }
 
     render(){
         return html`
-            <button @click=${this.login}>sign in</button>
-            <button @click=${this.logout}>sign out</button>
-            ${
-                this.currentUser
-                ? html`
-                    <p>${this.currentUser.displayName}</p>
-                    <img src="${this.currentUser.photoURL}"></img>
-                `
-                : ''
-            }
+            <ft-navbar></ft-navbar>
+            <div class="container">
+                <client-route path="/"> Home loaded </client-route>
+                <client-route path="/Workouts"> Workouts loaded </client-route>
+            </div>
         `
     }
 }
