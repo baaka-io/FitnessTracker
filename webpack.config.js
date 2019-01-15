@@ -28,7 +28,12 @@ module.exports = {
                     'sass-loader'
                 ],
                 exclude: /node_modules/
-            }
+            },
+            {
+                test: /\.toml/,
+                use: 'toml-loader',
+                exclude: /node_modules/
+            },
         ]
     }
 }

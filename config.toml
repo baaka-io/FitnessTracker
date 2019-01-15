@@ -1,0 +1,7 @@
+[firebase]
+apiKey= "AIzaSyC4SM8GMub_X7MqOHKGYUuGMqqAzpqntuc"
+authDomain= "fitnesstracker-d6d58.firebaseapp.com"
+databaseURL= "https://fitnesstracker-d6d58.firebaseio.com"
+projectId= "fitnesstracker-d6d58"
+storageBucket= "fitnesstracker-d6d58.appspot.com"
+messagingSenderId= "936928275092"
