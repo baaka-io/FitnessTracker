@@ -22,15 +22,6 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.scss/,
-                use: [
-                    'to-string-loader',
-                    'css-loader', 
-                    'sass-loader'
-                ],
-                exclude: /node_modules/
-            },
-            {
                 test: /\.toml/,
                 use: 'toml-loader',
                 exclude: /node_modules/

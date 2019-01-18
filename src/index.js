@@ -1,37 +1,41 @@
-import { LitElement, html } from "lit-element";
 import Store from "./redux/store"
 import { FIREBASE_INITIALIZE } from "./redux/actions";
-import "@polymer/iron-icon/iron-icon"
-import "@polymer/iron-icons/iron-icons"
-import "@polymer/iron-icons/places-icons"
-import "@polymer/iron-icons/social-icons"
-import '@vaadin/vaadin-icons/vaadin-icons.js'
-import "client-link"
-import "client-route"
-import "./components/user/user"
-import "./components/navbar/navbar"
-import "./components/home/home"
+import React from "react"
+import ReactDOM from "react-dom"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import Home from "./components/Home"
+import User from "./components/User"
+import NavigationTabs from "./components/NavigationTabs";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faUser, faHome, faDumbbell } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components"
 
-class App extends LitElement{
-    connectedCallback(){
-        super.connectedCallback()
+library.add(
+    faUser,
+    faHome,
+    faDumbbell,
+)
+
+const Container = styled.div`
+    height: calc(100vh - 48px);
+`
+
+class App extends React.Component{
+    componentWillMount(){
         Store.dispatch({ type: FIREBASE_INITIALIZE })
     }
 
-    render(){
-        return html`
-            <style>
-                .container {
-                    height: calc(100vh - 40px);
-                }
-            </style>
-            <div class="container">
-                <client-route path="/"> <ft-home></ft-home> </client-route>
-                <client-route path="/user"> <ft-user></ft-user> </client-route>
-            </div>
-            <ft-navbar></ft-navbar>
-        `
+    render() {
+        return <Router>
+            <React.Fragment>
+                <Container>
+                    <Route path="/" component={Home} exact/>
+                    <Route path="/user" component={User} exact/>
+                </Container>
+                <NavigationTabs></NavigationTabs>
+            </React.Fragment>
+        </Router>
     }
 }
 
-customElements.define("fitness-tracker", App)
+ReactDOM.render(<App/>, document.getElementById("root"))
