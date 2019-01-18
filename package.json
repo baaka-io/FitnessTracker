@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update-gh-pages": "npm run build && git subtree push --prefix dist origin gh-pages",
+    "update-gh-pages": "git subtree push --prefix dist origin gh-pages",
     "start": "webpack-dev-server --mode=development",
     "build": "webpack src"
   },
