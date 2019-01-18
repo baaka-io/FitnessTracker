@@ -1,6 +1,7 @@
 .navbar{
     display: flex;
-    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    position: sticky;
+    bottom: 0;
 
     client-link{
         flex-grow: 1;
@@ -19,8 +20,24 @@
             width: 50%;
         }
 
-        &.active {
-            border-bottom: 3px solid skyblue;
+        .active {
+            display: none;
+        }
+
+        .not-active {
+            display: inherit;
+        }
+
+        &.active{
+
+            .active {
+                display: inherit;
+            }
+
+            .not-active {
+                display: none;
+            }
+
         }
     }
 }

@@ -7,7 +7,7 @@ class FtHome extends LitElement{
             <style>${css}</style>
             <div class="container">
                 <div class="call-to-action">
-                    <button> WORK OUT! </button>
+                    <button> WORK OUT </button>
                 </div>
             </div>
         `

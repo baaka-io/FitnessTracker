@@ -1,0 +1,59 @@
+.container{
+    padding: 20px;
+    height: 100%;
+
+    .signed-out{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h1 {
+            position: absolute;
+            left: 50%;
+            top: 200px;
+            color: white;
+            font-size: 40px;
+            transform: translateX(-50%);
+            text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+            margin: 0 auto;
+        }
+
+        button {
+            font-size: 20px;
+            align-self: center;
+            border: 1px solid black;
+            background: none;
+            padding: 10px 20px;
+        }
+
+    }
+
+    .signed-in {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        margin: 0 auto;
+
+        img {
+            width: 128px;
+            height: 128px;
+            border-radius: 500px;
+            margin-bottom: 20px;
+        }
+
+        span {
+            text-align: center;
+        }
+
+        button {
+            margin-top: auto;
+            margin-bottom: 40px;
+            font-size: 20px;
+            border: 1px solid black;
+            background: none;
+            padding: 10px 20px;
+        }
+    }
+}
