@@ -1,33 +1,10 @@
 import React from "react"
-import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { NavLink } from "react-router-dom";
-
-const AppBar = styled.div`
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    width: 100vw;
-`
-
-const Tabs = styled.div`
-    display: flex;
-    width: 100%;
-`
-
-const Tab = styled(NavLink)`
-    color: grey;
-    text-align: center;
-    font-size: 1.5em;
-    padding: 10px 20px;
-    flex-grow: 1;
-    text-decoration: none;
-
-    &.active {
-        color: black;
-    }
-
-`
+import {
+    TabBar,
+    Tabs,
+    NavTab
+} from "./TabBar"
 
 export default class NavigationTabs extends React.Component{
 
@@ -39,18 +16,18 @@ export default class NavigationTabs extends React.Component{
     }
 
     render(){
-        return <AppBar>
+        return <TabBar>
             <Tabs>
-                <Tab to="/" exact>
+                <NavTab to="/" exact>
                     <FontAwesomeIcon icon="home" ></FontAwesomeIcon>
-                </Tab>
-                <Tab to="/workouts" exact>
+                </NavTab>
+                <NavTab to="/workouts" exact>
                     <FontAwesomeIcon icon="dumbbell" ></FontAwesomeIcon>
-                </Tab>
-                <Tab to="/user" exact>
+                </NavTab>
+                <NavTab to="/user" exact>
                     <FontAwesomeIcon icon="user"></FontAwesomeIcon>
-                </Tab>
+                </NavTab>
             </Tabs>
-        </AppBar>
+        </TabBar>
     }
 }

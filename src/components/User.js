@@ -1,7 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 import store from "../redux/store";
-import { AUTH_SIGN_IN } from "../redux/actions";
+import { AUTH_SIGN_IN, AUTH_SIGN_OUT } from "../redux/actions";
+import {
+    Button
+} from "./Button"
 
 const Container = styled.div`
     height: 100%;
@@ -25,11 +28,25 @@ const Title = styled.h1`
     text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 `
 
-const SignInWithGoogleButton = styled.button`
-    padding: 10px 20px;
-    border: 2px solid black;
-    background: none;
-    font-size: 1.1em;
+const UserProfileContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+
+    img {
+        margin: 20px 0;
+        height: 128px;
+        width: 128px;
+        border-radius: 500px;
+    }
+
+    button {
+        margin-top: auto;
+        margin-bottom: 10px;
+    }
 `
 
 export default class User extends React.Component{
@@ -50,16 +67,23 @@ export default class User extends React.Component{
         store.dispatch({ type: AUTH_SIGN_IN })
     }
 
+    signOut(){
+        store.dispatch({ type: AUTH_SIGN_OUT })
+    }
+
     render(){
         const signInForm = <SignInContainer>
             <Title>Sign In</Title>
-            <SignInWithGoogleButton onClick={this.signIn}>Sign in with Google</SignInWithGoogleButton>
+            <Button onClick={this.signIn}>Sign in with Google</Button>
         </SignInContainer>
 
         const userProfile = this.state.user && (
-            <React.Fragment>
+            <UserProfileContainer>
+                <img src={this.state.user.photoURL}></img>
                 <span>{this.state.user.displayName}</span>
-            </React.Fragment>
+                <span>{this.state.user.email}</span>
+                <Button onClick={this.signOut}>Sign Out</Button>
+            </UserProfileContainer>
         )
 
         return <Container>
