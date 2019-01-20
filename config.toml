@@ -5,3 +5,16 @@ databaseURL= "https://fitnesstracker-d6d58.firebaseio.com"
 projectId= "fitnesstracker-d6d58"
 storageBucket= "fitnesstracker-d6d58.appspot.com"
 messagingSenderId= "936928275092"
+[workout]
+exercises=[
+    "Bench Press",
+    "Biceps Curls",
+    "Chest Flys",
+    "Concentration Curls",
+    "Incline Bench Press",
+    "Incline Biceps Curls",
+    "Sitting Shoulder Press",
+    "Skull Crushers",
+    "Standing Shoulder Press",
+    "Triceps Extensions",
+]

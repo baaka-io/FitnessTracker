@@ -8,9 +8,10 @@ library.add(
     Icons.faUser,
     Icons.faHome,
     Icons.faDumbbell,
-    Icons.faTimes,
     Icons.faPause,
-    Icons.faPlus
+    Icons.faPlus,
+    Icons.faCheck,
+    Icons.faTimes
 )
 
 ReactDOM.render(<App/>, document.getElementById("root"))

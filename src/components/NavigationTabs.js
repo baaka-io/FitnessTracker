@@ -7,14 +7,6 @@ import {
 } from "./TabBar"
 
 export default class NavigationTabs extends React.Component{
-
-    constructor(){
-        super()
-        this.state = {
-            selectedTab: 0
-        }
-    }
-
     render(){
         return <TabBar>
             <Tabs>

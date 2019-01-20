@@ -1,5 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const Webpack = require("webpack")
 
 module.exports = {
@@ -11,8 +12,19 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Fitness Tracker - Baaka.io',
             template: 'index.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            filename: '200.html'
+        }),
+        new FaviconsWebpackPlugin({
+            logo: "./assets/icon.png",
+            inject: true,
+            icons: {
+                favicons: true,
+                android: true
+            }
         }),
         new Webpack.HotModuleReplacementPlugin()
     ],
@@ -24,6 +36,11 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
+                test: /\.html/,
+                use: 'html-loader',
+                exclude: /node_modules/
+            },
+            {
                 test: /\.toml/,
                 use: 'toml-loader',
                 exclude: /node_modules/
@@ -31,7 +48,7 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                'file-loader'
+                    'file-loader'
                 ]
             }
         ]
