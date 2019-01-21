@@ -1,13 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Timer from "tiny-timer";
 import Exercises from "./Exercises"
 import Config from "../../config.toml"
 import ConfirmationDialog from "./ConfirmationDialog"
 import { v4 as uuid } from "uuid";
 import EditExerciseDialog from "./EditExerciseDialog"
 import WorkoutSettingsDialog from "./WorkoutSettingsDialog";
+import TimerWorker from "../timer.worker"
+import Icon from "../../assets/icon.png"
 import {
     TabBar,
     Tabs,
@@ -63,7 +64,31 @@ export default class Workout extends React.Component{
             isBreak: false,
             breakStartTime: null,
             settings: {
-                maxBreakDuration: 120
+                maxBreakDuration: this.formattedDuration(120)
+            },
+            maxBreakDurationSeconds: 120
+        }
+
+
+        this.timerWorker = new TimerWorker()
+
+        this.timerWorker.onmessage = message => {
+            const time = message.data
+            this.setState({ ...this.state, duration: Math.round(time/1000) })
+            if(this.state.isBreak && this.state.maxBreakDurationSeconds <= (this.state.duration - this.state.breakStartTime)){
+                if(this.state.maxBreakDurationSeconds == (this.state.duration - this.state.breakStartTime)){
+                    navigator.serviceWorker.register('sw.js');
+                    Notification.requestPermission(function(result) {
+                        if (result === 'granted') {
+                            navigator.serviceWorker.ready.then(function(registration) {
+                                registration.showNotification("You reached your maximum break duration!", {
+                                    icon: Icon,
+                                    badge: Icon
+                                })
+                            });
+                        }
+                    });
+                }
             }
         }
 
@@ -79,12 +104,9 @@ export default class Workout extends React.Component{
         this.handleCloseSettingsDialogRequest = this.handleCloseSettingsDialogRequest.bind(this)
     }
 
-    componentDidMount(){
-        this.timer = new Timer({ stopwatch: true })
-        this.timer.on("tick", ms => {
-            this.setState({ ...this.state, duration: Math.round(ms/1000) })
-        })
-        this.timer.start(60 * 60 * 1000)
+    formattedDurationToSeconds(str){
+        const parts = str.split(":").map(s => parseInt(s))
+        return parts[0] * 3600 + parts[1] * 60 + parts[2]
     }
 
     handleBreakRequest(){
@@ -111,14 +133,25 @@ export default class Workout extends React.Component{
     }
 
     handleCloseSettingsDialogRequest(settings){
-        this.setState({
+        let state = {
             isSettingsDialogOpen: false
-        })
+        }
+
+        if(settings){
+            Object.assign(state, {
+                settings: {
+                    ...this.state.settings,
+                    ...settings
+                },
+                maxBreakDurationSeconds: this.formattedDurationToSeconds(settings.maxBreakDuration)
+            })
+        }
+
+        this.setState(state)
     }
 
     handleCloseRequest(){
-        this.timer.stop()
-        this.timer = null
+        this.timerWorker.terminate()
         this.props.onCloseRequest && this.props.onCloseRequest()
     }
 
@@ -134,9 +167,9 @@ export default class Workout extends React.Component{
                     {
                         id: uuid(),
                         name: value,
-                        sets: [8,8,8],
-                        weight: 20,
-                    } 
+                        sets: [],
+                        weight: "",
+                    }
                 ]
             })
         }

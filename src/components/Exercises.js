@@ -41,6 +41,9 @@ const exercise_avatar = {
 
 export default class Exercises extends React.Component{
     setsOverview(e){
+        if(!e.sets.length)
+            return ""
+            
         const sum = e.sets.reduce((previous, current) => current += previous)
         const avg = sum / e.sets.length
 

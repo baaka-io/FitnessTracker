@@ -68,8 +68,6 @@ export default class EditExerciseDialog extends React.Component{
             return
         }
 
-        console.log(weight)
-
         this.setState({
             exercise: {
                 ...this.state.exercise,
@@ -80,8 +78,14 @@ export default class EditExerciseDialog extends React.Component{
 
     handleCellChange(event, setIndex){
         const sets = this.state.exercise.sets.slice()
-        const value = parseInt(event.target.value)
-        sets[setIndex] = Number.isNaN(value) ? 0 : value
+        const value = event.target.value
+        const isIntRegex = /^\d*$/
+
+        if(!isIntRegex.test(value))
+            return
+
+        sets[setIndex] = value == ""? 0 : parseInt(value)
+
         this.setState({
             exercise: {
                 ...this.state.exercise,

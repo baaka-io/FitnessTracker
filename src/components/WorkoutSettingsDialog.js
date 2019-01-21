@@ -2,8 +2,7 @@ import React from "react"
 import {
     Dialog,
     DialogContent as _DialogContent,
-    DialogTitle,
-    TextField
+    DialogTitle
 } from "@material-ui/core"
 import { 
     Tab,
@@ -14,7 +13,16 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const DialogContent = styled(_DialogContent)`
+    display: flex;
+    position: relative;
     margin-top: 50px;
+`
+
+const TimePicker = styled.input`
+    position: absolute;
+    border: none;
+    border-bottom: 1px solid black;
+    right: 20px;
 `
 
 export default class WorkoutSettingsDialog extends React.Component{
@@ -25,13 +33,25 @@ export default class WorkoutSettingsDialog extends React.Component{
 
         this.handleSaveRequest = this.handleSaveRequest.bind(this)
         this.handleCloseRequest = this.handleCloseRequest.bind(this)
+        this.handleBreakDurationChange = this.handleBreakDurationChange.bind(this)
+    }
+
+    shouldComponentUpdate(props, state){
+        if(Object.compare(state, this.state))
+            return false
+        return true
     }
 
     handleSaveRequest(){
+        this.props.onClose(this.state)
     }
 
     handleCloseRequest(){
+        this.props.onClose(null)
+    }
 
+    handleBreakDurationChange(event){
+        this.setState({ maxBreakDuration: event.target.value})
     }
 
     render(){
@@ -41,13 +61,13 @@ export default class WorkoutSettingsDialog extends React.Component{
         >
             <DialogTitle>Settings</DialogTitle>
             <DialogContent>
-                <TextField
+                <label>Break Duration: </label>
+                <TimePicker
                     type="time"
-                    label="Maximal Break Duration"
+                    onChange={this.handleBreakDurationChange}
                     value={this.state.maxBreakDuration}
-                    variant="outlined"
-                    fullWidth
-                ></TextField>
+                    step="1"
+                ></TimePicker>
             </DialogContent>
             <TabBar>
                 <Tabs>
