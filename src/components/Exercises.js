@@ -44,7 +44,7 @@ export default class Exercises extends React.Component{
         const sum = e.sets.reduce((previous, current) => current += previous)
         const avg = sum / e.sets.length
 
-        return `${e.sets.length} x ${avg}`
+        return `${e.sets.length} x ${avg.toFixed(1)}`
     }
     render(){
         return <React.Fragment>

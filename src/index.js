@@ -11,7 +11,10 @@ library.add(
     Icons.faPause,
     Icons.faPlus,
     Icons.faCheck,
-    Icons.faTimes
+    Icons.faTimes,
+    Icons.faPlay,
+    Icons.faCog,
+    Icons.faArrowDown
 )
 
 ReactDOM.render(<App/>, document.getElementById("root"))
