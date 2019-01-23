@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import Home from "./components/Home"
 import User from "./components/User"
+import Workouts from "./components/Workouts"
 import NavigationTabs from "./components/NavigationTabs";
 import styled from "styled-components"
 import Store from "./redux/store"
@@ -22,6 +23,7 @@ class App extends React.Component{
             <React.Fragment>
                 <Container>
                     <Route path="/" component={Home} exact/>
+                    <Route path="/workouts" component={Workouts} exact/>
                     <Route path="/user" component={User} exact/>
                 </Container>
                 <NavigationTabs></NavigationTabs>

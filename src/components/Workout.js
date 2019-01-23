@@ -6,14 +6,16 @@ import Config from "../../config.toml"
 import ConfirmationDialog from "./ConfirmationDialog"
 import { v4 as uuid } from "uuid";
 import EditExerciseDialog from "./EditExerciseDialog"
+import firebase from "firebase"
 import WorkoutSettingsDialog from "./WorkoutSettingsDialog";
 import TimerWorker from "../timer.worker"
-import Icon from "../../assets/icon.png"
 import {
     TabBar,
     Tabs,
     Tab
 } from "./TabBar"
+import store from "../redux/store";
+import { WORKOUT_ADD } from "../redux/actions";
 
 const AppBar = styled.div`
     color: white;
@@ -72,24 +74,24 @@ export default class Workout extends React.Component{
 
         this.timerWorker = new TimerWorker()
 
+        const messaging = firebase.messaging()
+
+        messaging
+            .requestPermission()
+            .then(() => messaging.getToken())
+            .then(token => {
+                this.token = token
+            })
+
+        this.updateTimeWorker()
+
+        firebase.messaging().onMessage(message => {
+            console.log(message)
+        })
+
         this.timerWorker.onmessage = message => {
             const time = message.data
             this.setState({ ...this.state, duration: Math.round(time/1000) })
-            if(this.state.isBreak && this.state.maxBreakDurationSeconds <= (this.state.duration - this.state.breakStartTime)){
-                if(this.state.maxBreakDurationSeconds == (this.state.duration - this.state.breakStartTime)){
-                    navigator.serviceWorker.register('sw.js');
-                    Notification.requestPermission(function(result) {
-                        if (result === 'granted') {
-                            navigator.serviceWorker.ready.then(function(registration) {
-                                registration.showNotification("You reached your maximum break duration!", {
-                                    icon: Icon,
-                                    badge: Icon
-                                })
-                            });
-                        }
-                    });
-                }
-            }
         }
 
         this.handleBreakRequest = this.handleBreakRequest.bind(this)
@@ -104,6 +106,18 @@ export default class Workout extends React.Component{
         this.handleCloseSettingsDialogRequest = this.handleCloseSettingsDialogRequest.bind(this)
     }
 
+    componentWillMount(){
+        this.timerWorker.onmessage = () => {}
+    }
+
+    updateTimeWorker(){
+        this.timerWorker.postMessage([
+            this.state.isBreak,
+            this.state.maxBreakDurationSeconds,
+            this.state.breakStartTime
+        ])
+    }
+
     formattedDurationToSeconds(str){
         const parts = str.split(":").map(s => parseInt(s))
         return parts[0] * 3600 + parts[1] * 60 + parts[2]
@@ -113,7 +127,7 @@ export default class Workout extends React.Component{
         this.setState({ 
             isBreak: true,
             breakStartTime: this.state.duration
-        })
+        }, () => this.updateTimeWorker())
     }
 
     handleResumeRequest(){
@@ -124,6 +138,17 @@ export default class Workout extends React.Component{
     }
 
     handleSaveRequest(){
+        this.timerWorker.terminate()
+        store.dispatch({
+            type: WORKOUT_ADD,
+            payload: Object.assign({}, {
+                duration: this.state.duration,
+                exercises: this.state.exercises,
+                settings: this.state.settings,
+                date: new Date()
+            })
+        })
+        this.props.onCloseRequest && this.props.onCloseRequest()
     }
 
     handleSettingsRequest(){
@@ -147,7 +172,7 @@ export default class Workout extends React.Component{
             })
         }
 
-        this.setState(state)
+        this.setState(state, () => this.updateTimeWorker())
     }
 
     handleCloseRequest(){

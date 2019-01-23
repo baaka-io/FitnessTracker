@@ -2,6 +2,7 @@ import {
     AUTH_SIGN_IN, 
     AUTH_SIGN_OUT, 
     AUTH_CHANGE_USER,
+    WORKOUT_ADD,
     FIREBASE_INITIALIZE
 } from "./actions";
 import Firebase from "firebase"
@@ -11,6 +12,15 @@ import Store from "./store"
 export default function rootReducer(state, action){
     action.payload = action.payload || {}
     switch (action.type) {
+        case WORKOUT_ADD:
+            console.log(state)
+            return { 
+                ...state, 
+                workouts: [
+                    ...(state.workouts || []),
+                    action.payload 
+                ]
+            }
         case FIREBASE_INITIALIZE:
             if(action.payload._success === undefined){
                 Firebase.initializeApp(config.firebase)

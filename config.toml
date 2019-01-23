@@ -5,6 +5,8 @@ databaseURL= "https://fitnesstracker-d6d58.firebaseio.com"
 projectId= "fitnesstracker-d6d58"
 storageBucket= "fitnesstracker-d6d58.appspot.com"
 messagingSenderId= "936928275092"
+[firebase_messaging]
+serverKey='AAAA2iVG6pQ:APA91bFqfMABnBZls5mTq3HoYHc2CzwA20naRraUE3XTGRTqPSVlcrRpcJMrRCIqqlXTzLahv7AiQru2uInAhIccx2qQyanJJLjmSNtq_wCy8Wuah0HnQJE9Mhcqt_XDRThANviWQ5Ya'
 [workout]
 exercises=[
     "Bench Press",

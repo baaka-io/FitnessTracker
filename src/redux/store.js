@@ -3,7 +3,8 @@ import rootReducer from "./reducers"
 
 const initialState = {
     currentUser: null,
-    isFirebaseInitialized: false
+    isFirebaseInitialized: false,
+    workouts: []
 }
 
 const store = Redux.createStore(

@@ -2,8 +2,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ServiceWorkerWebpackPlugin = require("serviceworker-webpack-plugin")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
+const ManifestWebpackPlugin = require("webpack-manifest-plugin")
 const path = require("path")
-const Webpack = require("webpack")
 
 module.exports = {
     devtool: 'cheap-module-source-map',
@@ -22,7 +22,8 @@ module.exports = {
             filename: '200.html'
         }),
         new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, "./src/sw.js")
+            entry: path.join(__dirname, "./src/firebase-messaging-sw.js"),
+            filename: "firebase-messaging-sw.js"
         }),
         new FaviconsWebpackPlugin({
             logo: "./assets/icon.png",
@@ -30,6 +31,11 @@ module.exports = {
             icons: {
                 favicons: true,
                 android: true
+            }
+        }),
+        new ManifestWebpackPlugin({
+            seed: {
+                gcm_sender_id: "103953800507"
             }
         }),
     ],
