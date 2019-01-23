@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { Route } from "react-router-dom"
 import Home from "./components/Home"
 import User from "./components/User"
 import Workouts from "./components/Workouts"
@@ -13,22 +13,23 @@ const Container = styled.div`
     height: calc(100vh - 48px);
 `
 
+//TODO: Render loading shit while it is trying to authenticate instead of sending to logging page
+
 class App extends React.Component{
-    componentWillMount(){
+    constructor(props){
+        super(props)
         Store.dispatch({ type: FIREBASE_INITIALIZE })
     }
 
     render() {
-        return <Router>
-            <React.Fragment>
-                <Container>
-                    <Route path="/" component={Home} exact/>
-                    <Route path="/workouts" component={Workouts} exact/>
-                    <Route path="/user" component={User} exact/>
-                </Container>
-                <NavigationTabs></NavigationTabs>
-            </React.Fragment>
-        </Router>
+        return <React.Fragment>
+            <Container>
+                <Route path="/" component={Home} exact/>
+                <Route path="/workouts" component={Workouts} exact/>
+                <Route path="/user" component={User} exact/>
+            </Container>
+            <NavigationTabs></NavigationTabs>
+        </React.Fragment>
     }
 }
 

@@ -106,7 +106,7 @@ export default class Workout extends React.Component{
         this.handleCloseSettingsDialogRequest = this.handleCloseSettingsDialogRequest.bind(this)
     }
 
-    componentWillMount(){
+    componentWillUnmount(){
         this.timerWorker.onmessage = () => {}
     }
 
@@ -142,10 +142,11 @@ export default class Workout extends React.Component{
         store.dispatch({
             type: WORKOUT_ADD,
             payload: Object.assign({}, {
+                id: uuid(),
                 duration: this.state.duration,
                 exercises: this.state.exercises,
                 settings: this.state.settings,
-                date: new Date()
+                date: Date.now()
             })
         })
         this.props.onCloseRequest && this.props.onCloseRequest()

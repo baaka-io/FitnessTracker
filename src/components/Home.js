@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core"
 import BackgroundImage from "../../assets/home-background.jpg"
 import Workout from "./Workout"
+import withAuthGuard from "../withAuthGuard"
 import store from "../redux/store";
 
 const Container = styled.div`
@@ -30,7 +31,7 @@ const CallToAction = styled.button`
 
 const dialogTransition = props => <Slide direction="up" {...props}></Slide>
 
-export default class Home extends React.Component{
+class Home extends React.Component{
 
     constructor(){
         super()
@@ -68,3 +69,5 @@ export default class Home extends React.Component{
         </Container>
     }
 }
+
+export default withAuthGuard(Home)
