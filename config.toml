@@ -8,17 +8,16 @@ messagingSenderId= "936928275092"
 [firebase_messaging]
 serverKey='AAAA2iVG6pQ:APA91bFqfMABnBZls5mTq3HoYHc2CzwA20naRraUE3XTGRTqPSVlcrRpcJMrRCIqqlXTzLahv7AiQru2uInAhIccx2qQyanJJLjmSNtq_wCy8Wuah0HnQJE9Mhcqt_XDRThANviWQ5Ya'
 [workout]
-exercises=[
-    "Bench Press",
-    "Biceps Curls",
-    "Chest Flys",
-    "Concentration Curls",
-    "Deadlift",
-    "Incline Bench Press",
-    "Incline Biceps Curls",
-    "Sitting Shoulder Press",
-    "Skull Crushers",
-    "Squats",
-    "Standing Shoulder Press",
-    "Triceps Extensions",
-]
+    [workout.exercises]
+    "Bench Press"="CHEST_IMAGE"
+    "Biceps Curls"="BICEPS_IMAGE"
+    "Chest Flys"="CHEST_IMAGE"
+    "Concentration Curls"="BICEPS_IMAGE"
+    "Deadlift"="BACK_IMAGE"
+    "Incline Bench Press"="CHEST_IMAGE"
+    "Incline Biceps Curls"="BICEPS_IMAGE"
+    "Sitting Shoulder Press"="SHOULDERS_IMAGE"
+    "Skull Crushers"="TRICEPS_IMAGE"
+    "Squats"="LEGS_IMAGE"
+    "Standing Shoulder Press"="SHOULDERS_IMAGE"
+    "Triceps Extensions"="TRICEPS_IMAGE"

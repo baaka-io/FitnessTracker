@@ -1,41 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import Dialog from '@material-ui/core/Dialog';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import React from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import Button from "@material-ui/core/Button"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogActions from "@material-ui/core/DialogActions"
+import Dialog from "@material-ui/core/Dialog"
+import RadioGroup from "@material-ui/core/RadioGroup"
+import Radio from "@material-ui/core/Radio"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
 
 const options = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel',
-];
+  "None",
+  "Atria",
+  "Callisto",
+  "Dione",
+  "Ganymede",
+  "Hangouts Call",
+  "Luna",
+  "Oberon",
+  "Phobos",
+  "Pyxis",
+  "Sedna",
+  "Titania",
+  "Triton",
+  "Umbriel"
+]
 
 class ConfirmationDialog extends React.Component {
   constructor(props) {
-    super();
+    super()
     this.state = {
-      value: props.value,
-    };
+      value: props.value
+    }
 
     this.handleEntering = this.handleEntering.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
@@ -43,31 +43,30 @@ class ConfirmationDialog extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  // TODO
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState({ value: nextProps.value });
+      this.setState({ value: nextProps.value })
     }
   }
 
   handleEntering() {
-    this.radioGroupRef.focus();
-  };
+    this.radioGroupRef.focus()
+  }
 
-  handleCancel(){
-    this.props.onClose(this.props.value);
-  };
+  handleCancel() {
+    this.props.onClose(this.props.value)
+  }
 
   handleOk() {
-    this.props.onClose(this.state.value);
-  };
+    this.props.onClose(this.state.value)
+  }
 
   handleChange(event, value) {
-    this.setState({ value });
-  };
+    this.setState({ value })
+  }
 
   render() {
-    const { value, ...other } = this.props;
+    const { value, ...other } = this.props
 
     return (
       <Dialog
@@ -81,7 +80,7 @@ class ConfirmationDialog extends React.Component {
         <DialogContent>
           <RadioGroup
             ref={ref => {
-              this.radioGroupRef = ref;
+              this.radioGroupRef = ref
             }}
             aria-label="Ringtone"
             name="ringtone"
@@ -89,7 +88,12 @@ class ConfirmationDialog extends React.Component {
             onChange={this.handleChange}
           >
             {this.props.values.map(option => (
-              <FormControlLabel value={option} key={option} control={<Radio />} label={option} />
+              <FormControlLabel
+                value={option}
+                key={option}
+                control={<Radio />}
+                label={option}
+              />
             ))}
           </RadioGroup>
         </DialogContent>
@@ -102,7 +106,7 @@ class ConfirmationDialog extends React.Component {
           </Button>
         </DialogActions>
       </Dialog>
-    );
+    )
   }
 }
 
@@ -112,13 +116,13 @@ ConfirmationDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   values: PropTypes.arrayOf(PropTypes.string)
-};
+}
 
 const styles = () => ({
   paper: {
-    width: '80%',
-    maxHeight: 435,
-  },
-});
+    width: "80%",
+    maxHeight: 435
+  }
+})
 
-export default withStyles(styles)(ConfirmationDialog);
+export default withStyles(styles)(ConfirmationDialog)
