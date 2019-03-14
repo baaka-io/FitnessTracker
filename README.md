@@ -1,2 +1,2 @@
 # FitnessTracker
-fitnesstracker with firebase, lit-element and redux
+fitnesstracker with firebase, react and redux
